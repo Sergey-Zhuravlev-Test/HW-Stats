@@ -3,24 +3,16 @@ package ru.netology.stats.services;
 
 public class StatsService {
 
-
     public long sumSalesInYear(long[] sales) {
         long sum = 0;
-        for (int i = 0; i < sales.length; i++) {
-            sum = sum + sales[i];
+        for (long sale : sales) {
+            sum = sum + sale;
         }
         return sum;
     }
 
-
     public long averageSalesInMonth(long[] sales) {
-        long sum = 0;
-        long average = 0;
-        for (int i = 0; i < sales.length; i++) {
-            sum = sum + sales[i];
-            average = sum / sales.length;
-        }
-        return average; //return sum(sales) / sales.length; - упрощение кода из вебинара
+        return sumSalesInYear(sales) / sales.length;
     }
 
     public int monthSalesMax(long[] sales) {
@@ -51,36 +43,24 @@ public class StatsService {
 
     public int salesBelowAverage(long[] sales) {
         int monthBelow = 0;
-        long sum = 0;
-        long average;
-        for (int i = 0; i < sales.length; i++) {
-            sum = sum + sales[i];
-        }
-        average = sum / sales.length;
         for (long sale : sales) {
-            if (sale < average) {
+            if (sale < averageSalesInMonth(sales)) {
                 monthBelow++;
             }
         }
         return monthBelow;
     }
 
-        public int salesAboveAverage ( long[] sales){
-            int monthAbove = 0;
-            long sum = 0;
-            long average;
-            for (int i = 0; i < sales.length; i++) {
-                sum = sum + sales[i];
+    public int salesAboveAverage(long[] sales) {
+        int monthAbove = 0;
+        for (long sale : sales) {
+            if (sale > averageSalesInMonth(sales)) {
+                monthAbove++;
             }
-            average = sum / sales.length;
-            for (long sale : sales) {
-                if (sale > average) {
-                    monthAbove++;
-                }
-            }
-            return monthAbove;
         }
+        return monthAbove;
     }
+}
 
 
 
